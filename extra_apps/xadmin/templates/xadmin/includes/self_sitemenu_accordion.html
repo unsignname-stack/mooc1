@@ -1,0 +1,99 @@
+{% extends 'xadmin/includes/self_sitemenu_default.html' %}
+{% load i18n xadmin_tags %}
+
+
+{% block navbar_md %}
+<div class="panel-group hide-sm nav-sitemenu col-md-2" id="nav-accordion">
+  {#一级菜单   课程管理#}
+    {% for item in nav_menu %}
+  <div class="panel panel-{% if item.selected %}info{%else%}default{% endif %}">
+    {#一级菜单名#}
+    <div class="panel-heading">
+      <h6 class="panel-title one">
+        <span class="badge badge-info">{{ item.menus|length }}</span>
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#nav-accordion" href="#nav-panel-{{forloop.counter}}">
+          {% if item.url %}<a href="{{ item.url }}" class="section">{% endif %}
+          {% if item.icon %}<i class="fa-fw {{item.icon}}"></i>
+          {% elif item.first_icon %}<i class="fa-fw {{item.first_icon}}"></i>
+          {%else%}<i class="fa-fw fa fa-circle-o"></i>{% endif %}
+
+          {% trans item.title %}
+          {% if item.url %}</a>{% endif %}
+        </a>
+      </h6>
+    </div>
+    <div id="nav-panel-{{forloop.counter}}" class="list-group panel-collapse collapse{% if item.selected %} in{% endif %}">
+        {#二级级菜单   课程#}
+        {% for sitem in item.menus %}
+{#            存在三级菜单#}
+            {% if sitem.menus|length %}{#存在三级菜单#}
+                <div class="panel-heading panel panel-{% if sitem.selected %}info{%else%}default{% endif %}">
+                    <div class="panel-title second ">
+                        <span class="badge badge-info">{{ sitem.menus|length }}</span>
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#nav-panel-{{forloop.parentloop.counter}}" href="#nav-panel-{{forloop.parentloop.counter}}-{{forloop.counter}}">
+{#                            {% if sitem.url %}<a href="{{ sitem.url }}" class="section">{% endif %}#}
+                                &nbsp {% if sitem.icon %}<i class="fa-fw {{sitem.icon}}"></i>{%else%}<i class="fa-fw fa fa-circle-o"></i>{% endif %}
+                                <span>{{ sitem.title }}</span>
+{#                            {% if sitem.url %}</a >{% endif %}#}
+                        </a>
+                    </div>
+                </div>
+                <div id="nav-panel-{{forloop.parentloop.counter}}-{{forloop.counter}}" class="list-group panel-collapse collapse{% if sitem.selected %} in{% endif %}">
+                    {% for item3 in sitem.menus %}{#三级级级菜单   章节#}
+                        {% if item3.menus|length %}{#存在四级菜单#}
+                            <div class="panel-heading">
+                                <div class="panel-title three">
+                                    <span class="badge badge-info">{{ item3.menus|length }}</span>
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#nav-panel-{{forloop.parentloop.parentloop.counter}}-{{forloop.parentloop.counter}}" href="#nav-panel-{{forloop.parentloop.parentloop.counter}}-{{forloop.parentloop.counter}}-{{forloop.counter}}">
+{#                                        {% if item3.url %}<a href="{{ item3.url }}" class="section">{% endif %}#}
+{#                                            &nbsp &nbsp &nbsp &nbsp{% if item3.icon %}<i class="fa-fw {{item3.icon}}"></i>{%else%}<i class="fa-fw fa fa-circle-o"></i>{% endif %}#}
+                                            &nbsp &nbsp &nbsp
+                                            {{forloop.counter}}
+                                            <span>{{ item3.title }}</span>
+{#                                        {% if item3.url %}</a>{% endif %}#}
+                                    </a>
+                                </div>
+                            </div>
+                            <div id="nav-panel-{{forloop.parentloop.parentloop.counter}}-{{forloop.parentloop.counter}}-{{forloop.counter}}" class="list-group panel-collapse collapse{% if item3.selected %} in{% endif %}">
+                                  {% for item4 in item3.menus %}
+                                  <div class="panel-title three">
+                                    <a href="{{ item4.url|default_if_none:'#' }}" class="list-group-item{% if item4.selected %} active{% endif %}">
+{#                                    {% if item4.icon %}<i class="fa-fw {{item4.icon}}"></i>{%else%}<i class="fa-fw fa fa-circle-o"></i>{% endif %}#}
+                                        &nbsp &nbsp &nbsp &nbsp
+                                            {{forloop.parentloop.counter}}-{{forloop.counter}}
+                                      <span>{{ item4.title }}</span>
+                                    </a>
+                                  </div>
+
+                                  {% endfor %}
+                            </div>
+
+                        {%else%}{#不存在四级级#}
+                            <div class="panel-title three">
+                                <a href="{{ item3.url|default_if_none:'#' }}" class="list-group-item{% if item3.selected %} active{% endif %}">
+{#                                &nbsp &nbsp &nbsp &nbsp{% if item3.icon %}<i class="fa-fw {{item3.icon}}"></i>{%else%}<i class="fa-fw fa fa-circle-o"></i>{% endif %}#}
+                                &nbsp &nbsp &nbsp
+                                {{forloop.counter}}
+                                <span>{{ item3.title }}</span>
+                                </a>
+                            </div>
+
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+            {%else%}{#不存在三级#}
+                <div class="panel-title second ">
+                    <a href="{{ sitem.url|default_if_none:'#' }}" class="list-group-item{% if sitem.selected %} active{% endif %}">
+                    &nbsp {% if sitem.icon %}<i class="fa-fw {{sitem.icon}}"></i>{%else%}<i class="fa-fw fa fa-circle-o"></i>{% endif %}
+                    <span>{{ sitem.title }}</span>
+                </a>
+                </div>
+
+            {% endif %}
+        {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock navbar_md %}

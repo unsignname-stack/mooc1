@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <script src="/static/front/jquery-3.7.0.slim.min.js"></script>
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" href="/static/front/assets/favicon.db74ab0b.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>AIMOOC在线学习平台1</title>
+        <script type="text/javascript">
+          document.write("<script src='/static/front/webconfig.js?"+Math.random()+"'><\/script>")
+        </script>
+        <script type="text/javascript">
+          document.title=window.webConfig.webSystemTitle
+        </script>
+      <script type="module" crossorigin src="/static/front/assets/index.110289a9.js"></script>
+      <link rel="stylesheet" href="/static/front/assets/index.d533b7e2.css">
+    </head>
+    <style>
+        #loading-overlay {
+            position: fixed;top: 0;left: 0;width: 100%;height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);display: flex;justify-content: center;
+            align-items: center;z-index: 9999;
+        }
+        #loading-spinner {
+            width: 40px;height: 40px;border: 4px solid #f3f3f3;border-radius: 50%;
+            border-top: 4px solid #3498db;animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <body>
+    <div id="app"></div>
+
+    <div id="loading-overlay"><div id="loading-spinner"></div></div>
+    <script>
+        let app=document.getElementById('app')
+        $(app).ready(function() {$('#loading-overlay').hide();});
+    </script>
+
+    
+    </body>
+</html>
