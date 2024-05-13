@@ -1,5 +1,6 @@
 #### mooc1 
-ubuntu 20.04
+### 运行系统 ubuntu 20.04
+### 数据库 mysql 7.0
 ```shell
 apt install python3.8
 python3.8 --version
