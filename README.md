@@ -14,4 +14,7 @@ pip3 freeze > requirements.txt
 pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple
 ```
 
-# 
+### 运行
+```shell
+python manage.py runserver 8000
+```
